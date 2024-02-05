@@ -1,9 +1,11 @@
 import "./signup.css";
 import { useState } from "react";
 import logoSenetude from "../../assets/logo-senetude.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import apiUrl from "../../../config.json";
+import config from "../../../config.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signup = () => {
   const [hidePassword, setHidePassword] = useState(false);
@@ -18,6 +20,7 @@ const Signup = () => {
     address: "",
     phoneNumber: "",
   });
+  const navigate = useNavigate();
 
   const {
     firstName,
@@ -48,27 +51,19 @@ const Signup = () => {
         !address ||
         !phoneNumber
       ) {
-        throw new Error("Veuillez remplir tous les champs.");
+        setErrorMsg("Veuillez remplir tous les champs.");
       }
 
       // Validez d'autres conditions si nécessaire (par exemple, l'email doit être au bon format)
 
       // Envoyez les données d'inscription au serveur
-      const response = await axios.post(`${apiUrl}`, {
-        firstName,
-        lastName,
-        email,
-        password,
-        birthDayDate,
-        birthPlace,
-        address,
-        phoneNumber,
-      });
+      const response = await axios.post(`${config.apiUrl}/users/signup`, newStudent  );
 
       // Traitez la réponse du serveur (par exemple, redirigez l'utilisateur après une inscription réussie)
-      if (response.data.success) {
+      if (response.data.status === 201) {
+        toast("Inscription réussie...!");
         // Redirigez l'utilisateur vers la page de connexion ou une autre page appropriée
-        window.location.href = "/signin";
+        navigate("/signin");
       } else {
         setErrorMsg("Erreur lors de l'inscription. Veuillez réessayer.");
       }
@@ -89,9 +84,8 @@ const Signup = () => {
           Créer votre compte
         </h2>
       </div>
-
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form onSubmit={signupValidation} className="space-y-6">
+        <form onSubmit={(e) => signupValidation(e)} className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -144,7 +138,7 @@ const Signup = () => {
               <input
                 id="birthDayDate"
                 name="birthDayDate"
-                type="birthDayDate"
+                type="date"
                 value={birthDayDate}
                 onChange={OnInputChange}
                 autoComplete="birthDayDate"
@@ -273,14 +267,12 @@ const Signup = () => {
           </div>
 
           <div>
-            <Link to={"/signin"}>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                S'inscrire
-              </button>
-            </Link>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              S'inscrire
+            </button>
           </div>
         </form>
         <p className="mt-10 text-center text-sm text-gray-500">
@@ -295,6 +287,7 @@ const Signup = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

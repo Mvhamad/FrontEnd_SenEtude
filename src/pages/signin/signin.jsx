@@ -1,10 +1,11 @@
-import React from "react";
 import "./signin.css";
 import { useState } from "react";
 import logoSenetude from "../../assets/logo-senetude.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import apiUrl from "../../../config.json";
+import config from "../../../config.json";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Signin = () => {
   const [hidePassword, setHidePassword] = useState(false);
@@ -21,16 +22,22 @@ const Signin = () => {
     e.preventDefault();
     try {
       // Envoyer les données d'authentification au serveur
-      const response = await axios.post(`${apiUrl}/signin`, {
+      const response = await axios.post(`${config.apiUrl}/users/signin`, {
         email,
         password,
       });
 
       // Traitement de la réponse du serveur (par exemple, rediriger l'utilisateur après une connexion réussie)
-      if (response.data.succes  ) {
+      if (response.data.status === 200) {
+        // console.log(response);
         // Rediriger l'utilisateur vers la page d'accueil ou une autre page appropriée
-        const tok = localStorage.setItem("Token", response.data.token);
-        console.log(tok);
+        // const token = response.data.payload;
+        // console.log(token);
+        //localStorage.setItem("token", response.data.payload);
+        sessionStorage.setItem("sess", response.data)
+
+        toast(`Bienvenue ${response.data.firstName} ${response.data.lastName}`);
+        // console.log(response.data.token);
         // Rediriger l'utilisateur vers la page d'accueil ou une autre page appropriée
         navigate("/back-office");
       } else {
@@ -53,9 +60,8 @@ const Signin = () => {
           Se connecter à votre compte
         </h2>
       </div>
-
       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={(e) => handleSubmit(e)} className="space-y-6">
           <div>
             <label
               htmlFor="email"
@@ -114,14 +120,12 @@ const Signin = () => {
           </div>
 
           <div>
-            <Link to={"/signin"}>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
-                Se connecter
-              </button>
-            </Link>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            >
+              Se connecter
+            </button>
           </div>
           {errorMsg && <div className="text-red-500 text-sm">{errorMsg}</div>}
         </form>
@@ -137,6 +141,7 @@ const Signin = () => {
           </Link>
         </p>
       </div>
+      <ToastContainer/>
     </div>
   );
 };

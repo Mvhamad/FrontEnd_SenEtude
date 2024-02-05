@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 export const addStudentService = (data) => {
     const apiUrl = serviceUtils.getApiUrl();
 
-    axios.post(`http://localhost:9000/senetude-api-v1/users`, data)
+    axios.post(`http://localhost:9000/senetude-api-v1/users/signup`, data)
     .then(response => {
     
         const { status, message } = response.data;

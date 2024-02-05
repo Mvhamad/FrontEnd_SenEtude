@@ -1,8 +1,8 @@
-import React from 'react'
 import AddStudentForm from '../../../../components/addStudentForm/add-student-form';
 import { ToastContainer } from 'react-toastify';
 
-const AddStudent = () => {
+
+const AddStudent = () => { 
   return (
     <div className='add-form py-10 px-8'>
       <h1 className='text-4xl'>

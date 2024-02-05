@@ -1,13 +1,18 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import LogoSenetude from "../../assets/logo-senetude.png";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Sidebar = () => {
   const [hideDropDownUniv, setHideDropDownUniv] = useState(true);
   const [hideDropDownEtud, setHideDropDownEtud] = useState(true);
+  const navigate = useNavigate();
+  const LogOut = () => {
+    sessionStorage.removeItem("sess");
+    navigate('/');
+  }
 
   return (
-    <div>
+    <div className="text-black">
       <button
         data-drawer-target="default-sidebar"
         data-drawer-toggle="default-sidebar"
@@ -36,7 +41,7 @@ const Sidebar = () => {
         className="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
-        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+        <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50">
           <div className="curson-pointer flex items-center pl-2.5 mb-5">
             <Link className="flex">
               <img
@@ -44,14 +49,14 @@ const Sidebar = () => {
                 className="h-6 mr-3 sm:h-7"
                 alt="Logo Senetude"
               />
-              <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+              <span className="self-center text-xl font-semibold whitespace-nowrap ">
                 SENETUDE
               </span>
             </Link>
           </div>
           <ul className="space-y-2 font-medium">
             <Link to="accueil">
-              <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
                 <svg
                   aria-hidden="true"
                   className="w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -66,7 +71,7 @@ const Sidebar = () => {
               </li>
             </Link>
             <Link to="profil">
-              <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700">
+              <li className="cursor-pointer flex items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700">
                 <svg
                   aria-hidden="true"
                   className="flex-shrink-0 w-6 h-6 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
@@ -88,7 +93,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:hover:bg-gray-700"
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setHideDropDownEtud(!hideDropDownEtud)}
@@ -121,12 +126,12 @@ const Sidebar = () => {
                 }
               >
                 <Link to="students/list">
-                  <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  dark:hover:bg-gray-700">
                     Liste des étudiants
                   </li>
                 </Link>
                 <Link to="students/add">
-                  <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                  <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  dark:hover:bg-gray-700">
                     Ajouter un étudiant
                   </li>
                 </Link>
@@ -135,7 +140,7 @@ const Sidebar = () => {
             <li>
               <button
                 type="button"
-                className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
+                className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100  dark:hover:bg-gray-700"
                 aria-controls="dropdown-example"
                 data-collapse-toggle="dropdown-example"
                 onClick={() => setHideDropDownUniv(!hideDropDownUniv)}
@@ -168,14 +173,14 @@ const Sidebar = () => {
                   hideDropDownUniv ? "hidden " : " " + "py-2 space-y-2"
                 }
               >
-                <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  dark:hover:bg-gray-700">
                   <Link
                   to="university/list"
                   >
                     Liste des établissements
                   </Link>
                 </li>
-                <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                <li className="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100  dark:hover:bg-gray-700">
                   <Link
                     to="university/add"
                   >
@@ -187,7 +192,7 @@ const Sidebar = () => {
             <li>
               <a
                 href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
+                className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 dark:hover:bg-gray-700"
               >
                 <svg
                   aria-hidden="true"
@@ -202,7 +207,7 @@ const Sidebar = () => {
                     clipRule="evenodd"
                   ></path>
                 </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">
+                <span onClick={LogOut} className="flex-1 ml-3 whitespace-nowrap">
                   Deconnexion
                 </span>
               </a>

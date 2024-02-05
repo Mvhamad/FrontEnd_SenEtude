@@ -83,7 +83,7 @@ const Table = ({ headerTable, dataTable, actionList }) => {
           <table className="w-full min-w-max table-auto text-left">
             <thead>
               <tr>
-                {TABLE_HEAD.map((head) => (
+                {headerTable.map((head) => (
                   <th
                     key={head}
                     className="border-y border-blue-gray-100 bg-blue-gray-50/50 p-4"
@@ -100,28 +100,31 @@ const Table = ({ headerTable, dataTable, actionList }) => {
               </tr>
             </thead>
             <tbody>
-              {TABLE_ROWS.map(
+              {dataTable.map(
                 (
-                  {
-                    img,
-                    name,
-                    amount,
-                    date,
-                    status,
-                    account,
-                    accountNumber,
-                    expiry,
-                  },
+                  // {
+                  //   img,
+                  //   name,
+                  //   amount,
+                  //   date,
+                  //   status,
+                  //   account,
+                  //   accountNumber,
+                  //   expiry,
+                  // },
+                  data,
                   index
-                ) => {
-                  const isLast = index === TABLE_ROWS.length - 1;
-                  const classes = isLast
-                    ? "p-4"
-                    : "p-4 border-b border-blue-gray-50";
+                ) => 
+                {
+                  // const isLast = index === dataTable.length - 1;
+                  // const classes = isLast
+                  //   ? "p-4"
+                  //   : "p-4 border-b border-blue-gray-50";
 
-                  return (
-                    <tr key={name}>
-                      <td className={classes}>
+                  // return 
+                  (
+                    <tr key={index}>
+                      <td className="">
                         <div className="flex items-center gap-3">
                           <Avatar
                             src={img}
@@ -138,7 +141,7 @@ const Table = ({ headerTable, dataTable, actionList }) => {
                           </Typography>
                         </div>
                       </td>
-                      <td className={classes}>
+                      <td className="">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -147,7 +150,7 @@ const Table = ({ headerTable, dataTable, actionList }) => {
                           {amount}
                         </Typography>
                       </td>
-                      <td className={classes}>
+                      <td className="">
                         <Typography
                           variant="small"
                           color="blue-gray"
@@ -156,7 +159,7 @@ const Table = ({ headerTable, dataTable, actionList }) => {
                           {date}
                         </Typography>
                       </td>
-                      <td className={classes}>
+                      <td className="">
                         <div className="w-max">
                           <Chip
                             size="sm"
@@ -172,7 +175,7 @@ const Table = ({ headerTable, dataTable, actionList }) => {
                           />
                         </div>
                       </td>
-                      <td className={classes}>
+                      <td className="">
                         <div className="flex items-center gap-3">
                           <div className="h-9 w-12 rounded-md border border-blue-gray-50 p-1">
                             <Avatar
@@ -205,7 +208,7 @@ const Table = ({ headerTable, dataTable, actionList }) => {
                           </div>
                         </div>
                       </td>
-                      <td className={classes}>
+                      <td className="">
                         <Tooltip content="Edit User">
                           <IconButton variant="text" color="blue-gray">
                             <PencilIcon className="h-4 w-4" />
